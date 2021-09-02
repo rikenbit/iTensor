@@ -1,0 +1,5 @@
+importFrom(rTensor)
+
+export(ICA)
+export(GroupICA)
+export(MultilinearICA)
