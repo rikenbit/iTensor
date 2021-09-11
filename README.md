@@ -16,8 +16,7 @@ devtools::install_github("rikenbit/iTensor")
 References
 ======
 - **ICA**: XXXXX
-- **GroupICA**: XXXXX
-- **MultilinearICA**: XXXXX
+- **MultiICA**: XXXXX
 
 ## License
 Copyright (c) 2021 Koki Tsuyuzaki and Laboratory for Bioinformatics Research, RIKEN Center for Biosystems Dynamics Reseach
