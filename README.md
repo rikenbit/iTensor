@@ -1,5 +1,5 @@
 # iTensor
-R package for ICA based Matrix/Tensor Decomposition
+ICA-based Matrix/Tensor Decomposition
 
 Installation
 ======

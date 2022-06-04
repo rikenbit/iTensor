@@ -1,6 +1,6 @@
 Package: iTensor
 Type: Package
-Title: ICA based Matrix/Tensor Decomposition
+Title: ICA-based Matrix/Tensor Decomposition
 Version: 0.99.0
 Authors@R: c(person("Koki", "Tsuyuzaki", role = c("aut", "cre"),
                       email = "k.t.the-answer@hotmail.co.jp"))
