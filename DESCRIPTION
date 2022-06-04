@@ -2,12 +2,20 @@ Package: iTensor
 Type: Package
 Title: ICA based Matrix/Tensor Decomposition
 Version: 0.99.0
-Date: 2021-08-24
 Authors@R: c(person("Koki", "Tsuyuzaki", role = c("aut", "cre"),
                       email = "k.t.the-answer@hotmail.co.jp"))
-Suggests: testthat
+Description: Some functions for performing ICA, MICA, and Multiliear ICA.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
 Depends: R (>= 4.1.0)
-Imports: rTensor
-Description: XXXXXXXXXXXXXXXX
-License: Artistic-2.0
 URL: https://github.com/rikenbit/mwTensor
+RoxygenNote: 7.1.2
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports:
+    MASS,
+    methods,
+    rTensor,
+    stats
