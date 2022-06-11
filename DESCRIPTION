@@ -4,7 +4,7 @@ Title: ICA-Based Matrix/Tensor Decomposition
 Version: 0.99.0
 Authors@R: c(person("Koki", "Tsuyuzaki", role = c("aut", "cre"),
                       email = "k.t.the-answer@hotmail.co.jp"))
-Description: Some functions for performing ICA, MICA, and Multilinear ICA. For the details of these methods, see the reference section of GitHub README.md <https://github.com/rikenbit/iTensor>.
+Description: Some functions for performing ICA, MICA, and Multilinear ICA are implemented. ICA, MICA, and Multilinear ICA extract statistically independent components from single matrix, multiple matrices, and single tensor, respectively. For the details of these methods, see the reference section of GitHub README.md <https://github.com/rikenbit/iTensor>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
