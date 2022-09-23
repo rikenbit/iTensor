@@ -1,3 +1,14 @@
+[![DOI](https://zenodo.org/badge/402303422.svg)](https://zenodo.org/badge/latestdoi/402303422)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/iTensor)](
+https://cran.r-project.org/package=iTensor)
+[![Downloads](https://cranlogs.r-pkg.org/badges/iTensor)](https://CRAN.R-project.org/package=iTensor)
+[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/iTensor?color=orange)](https://CRAN.R-project.org/package=iTensor)
+[![:name status badge](https://rikenbit.r-universe.dev/badges/:name)](https://rikenbit.r-universe.dev)
+[![:registry status badge](https://rikenbit.r-universe.dev/badges/:registry)](https://rikenbit.r-universe.dev)
+[![:total status badge](https://rikenbit.r-universe.dev/badges/:total)](https://rikenbit.r-universe.dev)
+[![iTensor status badge](https://rikenbit.r-universe.dev/badges/iTensor)](https://rikenbit.r-universe.dev)
+
+
 # iTensor
 ICA-based Matrix/Tensor Decomposition
 
