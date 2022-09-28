@@ -7,7 +7,7 @@ https://cran.r-project.org/package=iTensor)
 [![:registry status badge](https://rikenbit.r-universe.dev/badges/:registry)](https://rikenbit.r-universe.dev)
 [![:total status badge](https://rikenbit.r-universe.dev/badges/:total)](https://rikenbit.r-universe.dev)
 [![iTensor status badge](https://rikenbit.r-universe.dev/badges/iTensor)](https://rikenbit.r-universe.dev)
-
+![GitHub Actions](https://github.com/rikenbit/iTensor/actions/workflows/build_test_push.yml/badge.svg)
 
 # iTensor
 ICA-based Matrix/Tensor Decomposition
