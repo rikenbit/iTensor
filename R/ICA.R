@@ -65,7 +65,7 @@ ICA <- function(X, J,
         }
     }
     # Output
-    names(WChange) <- c("offset", 1:(iter - 1))
+    names(WChange) <- c("offset", seq_len(iter - 1))
     list(
         A=A, S=S, J=J, algorithm=algorithm, num.iter=num.iter,
         thr=thr, verbose=verbose, WChange=WChange)
@@ -77,7 +77,7 @@ ICA <- function(X, J,
     stopifnot(length(J) == 1)
     stopifnot(min(dim(X)) >= J)
     stopifnot(is.numeric(num.iter))
-    stopifnot(num.iter > 0)
+    stopifnot(num.iter >= 0)
     stopifnot(is.numeric(thr))
     stopifnot(is.logical(verbose))
     stopifnot(is.numeric(learning_rate))
