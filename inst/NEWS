@@ -1,3 +1,9 @@
+VERSION 1.0.0
+------------------------
+   o GroupICA() are added
+   o 9 algorithms for ICA() are added
+   o Vignettes are added
+
 VERSION 0.99.1
 ------------------------
    o Debug of ICA() when iter = 0

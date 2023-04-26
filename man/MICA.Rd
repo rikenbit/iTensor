@@ -2,11 +2,7 @@
 % Please edit documentation in R/MICA.R
 \name{MICA}
 \alias{MICA}
-\title{Multimodal independent component analysis
-The input datasets are assumed to be two matrices sharing the column space.
-MICA decomposes the matrices simutanously
-and extracts the components that maximizes the mutual information
-between the components.}
+\title{Multimodal independent component analysis}
 \usage{
 MICA(
   X,
@@ -37,7 +33,6 @@ MICA(
 A list containing the result of the decomposition
 }
 \description{
-Multimodal independent component analysis
 The input datasets are assumed to be two matrices sharing the column space.
 MICA decomposes the matrices simutanously
 and extracts the components that maximizes the mutual information

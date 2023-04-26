@@ -1,0 +1,196 @@
+---
+title: "1. Independent Component Analysis (ICA)"
+author:
+- name: Koki Tsuyuzaki
+  affiliation: Department of Artificial Intelligence Medicine,
+    Graduate School of Medicine, Chiba University
+  email: k.t.the-answer@hotmail.co.jp
+date: "`r Sys.Date()`"
+bibliography: bibliography.bib
+package: iTensor
+output: rmarkdown::html_vignette
+vignette: |
+  %\VignetteIndexEntry{1. Independent Component Analysis (ICA)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+In this vignette, we consider approximating a data matrix as a product of multiple low-rank matrices (a.k.a., factor matrices).
+
+Test data is available from `toyModel`.
+
+```{r data, echo=TRUE}
+library("iTensor")
+data1 <- iTensor::toyModel("ICA_Type1")
+data2 <- iTensor::toyModel("ICA_Type2")
+data3 <- iTensor::toyModel("ICA_Type3")
+data4 <- iTensor::toyModel("ICA_Type4")
+data5 <- iTensor::toyModel("ICA_Type5")
+dim(data1$X_observed)
+dim(data2$X_observed)
+dim(data3$X_observed)
+dim(data4$X_observed)
+dim(data5$gene) # N < P systems
+```
+
+Summary of these data is as follows:
+
+1. ICA with time-independent sub-Gaussian data
+2. ICA with time-independent super-Gaussian data
+3. ICA with data mixed with signals having no time dependence and different kurtosis
+4. ICA with time-dependent data
+5. IPCA in N < P systems
+
+You will see that the stuctures of these data as follows.
+
+```{r data2, echo=TRUE, fig.height=4, fig.width=4}
+pairs(data1$X_observed, main="data1")
+pairs(data2$X_observed, main="data2")
+pairs(data3$X_observed, main="data3")
+pairs(data4$X_observed, main="data4")
+dim(data5$gene)
+```
+
+To perform and visualize all the ICA at once, here we write some functions as follows.
+
+```{r setting, echo=TRUE}
+allICA <- function(X, J){
+    # Classic ICA Methods
+    out.FastICA <- ICA(X=X, J=J, algorithm="FastICA")
+    out.InfoMax <- ICA(X=X, J=J, algorithm="InfoMax")
+    out.ExtInfoMax <- ICA(X=X, J=J, algorithm="ExtInfoMax")
+
+    # Modern ICA Methods
+    out.JADE <- ICA2(X=X, J=J, algorithm="JADE")
+    out.AuxICA1 <- ICA2(X=X, J=J, algorithm="AuxICA1")
+    out.AuxICA2 <- ICA2(X=X, J=J, algorithm="AuxICA2")
+    out.SIMBEC <- ICA2(X=X, J=J, algorithm="SIMBEC")
+    out.AMUSE <- ICA2(X=X, J=J, algorithm="AMUSE")
+    out.SOBI <- ICA2(X=X, J=J, algorithm="SOBI")
+    out.FOBI <- ICA2(X=X, J=J, algorithm="FOBI")
+    out.ProDenICA <- ICA2(X=X, J=J, algorithm="ProDenICA", num.iter = 1)
+    out.RICA <- ICA2(X=X, J=J, algorithm="RICA", num.iter = 1)
+
+    # Output
+    list(out.FastICA=out.FastICA, out.InfoMax=out.InfoMax,
+      out.ExtInfoMax=out.ExtInfoMax, out.JADE=out.JADE,
+      out.AuxICA1=out.AuxICA1, out.AuxICA2=out.AuxICA2,
+      out.SIMBEC=out.SIMBEC, out.AMUSE=out.AMUSE, out.SOBI=out.SOBI, out.FOBI=out.FOBI,
+      out.ProDenICA=out.ProDenICA, out.RICA=out.RICA)
+}
+
+pairsAllICA <- function(out){
+    print(pairs(out$out.FastICA$S, main="FastICA"))
+    dev.new()
+    print(pairs(out$out.InfoMax$S, main="InfoMax"))
+    dev.new()
+    print(pairs(out$out.ExtInfoMax$S, main="ExtInfoMax"))
+    dev.new()
+    print(pairs(Re(out$out.JADE$S), main="JADE"))
+    dev.new()
+    print(pairs(out$out.AuxICA1$S, main="AuxICA1"))
+    dev.new()
+    print(pairs(out$out.AuxICA2$S, main="AuxICA2"))
+    dev.new()
+    print(pairs(out$out.SIMBEC$S, main="SIMBEC"))
+    dev.new()
+    print(pairs(out$out.AMUSE$S, main="AMUSE"))
+    dev.new()
+    print(pairs(out$out.SOBI$S, main="SOBI"))
+    dev.new()
+    print(pairs(out$out.FOBI$S, main="FOBI"))
+    dev.new()
+    print(pairs(out$out.ProDenICA$S, main="ProDenICA"))
+    dev.new()
+    print(pairs(out$out.RICA$S, main="RICA"))
+}
+
+CorrIndexAllICA <- function(S, out){
+    list(out.FastICA=CorrIndex(cor(S, out$out.FastICA$S)),
+      out.InfoMax=CorrIndex(cor(S, out$out.InfoMax$S)),
+      out.ExtInfoMax=CorrIndex(cor(S, out$out.ExtInfoMax$S)),
+      out.JADE=CorrIndex(cor(S, Re(out$out.JADE$S))),
+      out.AuxICA1=CorrIndex(cor(S, out$out.AuxICA1$S)),
+      out.AuxICA2=CorrIndex(cor(S, out$out.AuxICA2$S)),
+      out.SIMBEC=CorrIndex(cor(S, out$out.SIMBEC$S)),
+      out.AMUSE=CorrIndex(cor(S, out$out.AMUSE$S)),
+      out.SOBI=CorrIndex(cor(S, out$out.SOBI$S)),
+      out.FOBI=CorrIndex(cor(S, out$out.FOBI$S)),
+      out.ProDenICA=CorrIndex(cor(S, out$out.ProDenICA$S)),
+      out.RICA=CorrIndex(cor(S, out$out.RICA$S)))
+}
+```
+
+# 1. ICA with time-independent sub-Gaussian data
+
+In
+
+```{r ica1, echo=TRUE, fig.height=4, fig.width=4}
+set.seed(123456)
+out1 <- allICA(X=data1$X_observed, J=3)
+pairsAllICA(out1)
+```
+
+- CorrIndexとは
+
+```{r corrindex1, echo=TRUE}
+CorrIndexAllICA(data1$S_true, out1)
+```
+
+# 2. ICA with time-independent super-Gaussian data
+
+```{r ica2, echo=TRUE, fig.height=4, fig.width=4}
+set.seed(123456)
+out2 <- allICA(X=data2$X_observed, J=3)
+pairsAllICA(out2)
+```
+
+```{r corrindex2, echo=TRUE}
+CorrIndexAllICA(data2$S_true, out2)
+```
+
+# 3. ICA with data mixed with signals having no time dependence and different kurtosis
+
+```{r ica3, echo=TRUE, fig.height=4, fig.width=4}
+set.seed(123456)
+out3 <- allICA(X=data3$X_observed, J=3)
+pairsAllICA(out3)
+```
+
+```{r corrindex3, echo=TRUE}
+CorrIndexAllICA(data3$S_true, out3)
+```
+
+# 4. ICA with time-dependent data
+
+```{r ica4, echo=TRUE, fig.height=4, fig.width=4}
+set.seed(123456)
+out4 <- allICA(X=data4$X_observed, J=3)
+pairsAllICA(out4)
+```
+
+```{r corrindex4, echo=TRUE}
+CorrIndexAllICA(data4$S_true, out4)
+```
+
+# 5. IPCA in N < P systems
+
+```{r ica5, echo=TRUE, fig.height=4, fig.width=4}
+library("mixOmics")
+set.seed(123456)
+
+res.ipca <- ipca(data5$gene, ncomp=3, mode="deflation")
+pairs(res.ipca$x, main="IPCA (mixOmics)", col=data5$treatment[,"Treatment.Group"], pch=16)
+out5 <- ICA2(X=as.matrix(data5$gene), J=3, algorithm="IPCA")
+pairs(out5$S, main="IPCA (iTensor)", col=data5$treatment[,"Treatment.Group"], pch=16)
+```
+
+# Session Information {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+
+# References

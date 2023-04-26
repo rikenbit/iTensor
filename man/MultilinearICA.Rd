@@ -2,15 +2,14 @@
 % Please edit documentation in R/MultilinearICA.R
 \name{MultilinearICA}
 \alias{MultilinearICA}
-\title{Multilinear independent component analysis
-The input object is assumed to be a Tensor object defined by rTensor package.
-In MultilinearICA, ICA function is performed in each mode of the tensor.}
+\title{Multilinear independent component analysis}
 \usage{
 MultilinearICA(
   X,
   Js = c(3, 3, 3),
   modes = 1:3,
-  algorithm = c("FastICA", "InfoMax", "ExtInfoMax")
+  algorithm = c("FastICA", "InfoMax", "ExtInfoMax", "JADE", "AuxICA1", "AuxICA2", "IPCA",
+    "SIMBEC", "AMUSE", "SOBI", "FOBI", "ProDenICA", "RICA")
 )
 }
 \arguments{
@@ -26,8 +25,7 @@ MultilinearICA(
 A list containing the result of the decomposition
 }
 \description{
-Multilinear independent component analysis
-The input object is assumed to be a Tensor object defined by rTensor package.
+#' The input object is assumed to be a Tensor object defined by rTensor package.
 In MultilinearICA, ICA function is performed in each mode of the tensor.
 }
 \examples{

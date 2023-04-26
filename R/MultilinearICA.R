@@ -1,5 +1,6 @@
 #' Multilinear independent component analysis
-#' The input object is assumed to be a Tensor object defined by rTensor package.
+#'
+#'#' The input object is assumed to be a Tensor object defined by rTensor package.
 #' In MultilinearICA, ICA function is performed in each mode of the tensor.
 #' @param X An rTensor object
 #' @param Js A vector to specify the rank in each mode (Default: c(3,3,3))
@@ -16,7 +17,9 @@
 #' @importFrom methods is
 #' @export
 MultilinearICA <- function(X, Js=c(3,3,3), modes=1:3,
-    algorithm=c("FastICA", "InfoMax", "ExtInfoMax")){
+    algorithm=c("FastICA", "InfoMax", "ExtInfoMax",
+        "JADE", "AuxICA1", "AuxICA2", "IPCA", "SIMBEC",
+        "AMUSE", "SOBI", "FOBI", "ProDenICA", "RICA")){
     ######################################
     # Argument Check
     ######################################
@@ -36,7 +39,11 @@ MultilinearICA <- function(X, Js=c(3,3,3), modes=1:3,
         if(m %in% modes){
             position <- which(modes == m)
             Xm <- cs_unfold(X, m=m)@data
-            As[[m]] <- ICA(X=Xm, J=Js[position], algorithm=algorithm)$A
+            if(algorithm %in% c("FastICA", "InfoMax", "ExtInfoMax")){
+                As[[m]] <- ICA(X=Xm, J=Js[position], algorithm=algorithm)$A
+            }else{
+                As[[m]] <- ICA2(X=Xm, J=Js[position], algorithm=algorithm)$A
+            }
         }
     }
     # Core tensor

@@ -1,0 +1,62 @@
+---
+title: "3. Multilinear Independent Component Analysis (MultilinearICA)"
+author:
+- name: Koki Tsuyuzaki
+  affiliation: Department of Artificial Intelligence Medicine,
+    Graduate School of Medicine, Chiba University
+  email: k.t.the-answer@hotmail.co.jp
+date: "`r Sys.Date()`"
+bibliography: bibliography.bib
+package: iTensor
+output: rmarkdown::html_vignette
+vignette: |
+  %\VignetteIndexEntry{3. Multilinear Independent Component Analysis (MultilinearICA)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+In this vignette we consider approximating a tensor as a product of multiple low-rank matrices (a.k.a., factor matrices) and a core tensor.
+
+Test data is available from `toyModel`.
+
+```{r data, echo=TRUE}
+library("iTensor")
+library("nnTensor")
+data <- nnTensor::toyModel("CP")
+str(data, 2)
+```
+
+You will see that there are four small blocks in the diagonal direction of the data tensor.
+
+```{r data2, echo=TRUE, fig.height=6, fig.width=6}
+plotTensor3D(data)
+```
+
+# Multilinear Independent Component Analysis (MultilinearICA)
+
+There are so many tensor decomposition algorithms but here we consider that each factor matrix is extracted by Independent Component Analysis (ICA). This is called Multilinear Independent Component Analysis (MultilinearICA [@multilinearica]).
+
+`MultilinearICA` can be performed as follows.
+
+```{r multilinearica, echo=TRUE}
+out <- MultilinearICA(data, Js=c(4,4,4), algorithm="FastICA")
+```
+
+The rank for each factor matrix can be set as `Js` and the decomposition algorithm can be easily switched by `algorithm`.
+
+By using `recTensor` of `nnTensor`, user can easily reconstruct the data from core tensor and factor matrices as follows.
+
+```{r plot_multilinearica, echo=TRUE, fig.height=6, fig.width=6}
+rec_data <- recTensor(out$S, out$As)
+plotTensor3D(rec_data)
+```
+
+# Session Information {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+
+# References

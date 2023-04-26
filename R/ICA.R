@@ -1,4 +1,5 @@
-#' Independent Component Analysis
+#' Independent Component Analysis (Classic Methods)
+#'
 #' The input data is assumed to be a matrix.
 #' ICA decomposes the matrix and extract the components that
 #' are statistically independent each other.

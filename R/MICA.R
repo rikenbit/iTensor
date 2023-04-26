@@ -1,4 +1,5 @@
 #' Multimodal independent component analysis
+#'
 #' The input datasets are assumed to be two matrices sharing the column space.
 #' MICA decomposes the matrices simutanously
 #' and extracts the components that maximizes the mutual information

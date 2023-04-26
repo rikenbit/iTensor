@@ -1,0 +1,98 @@
+---
+title: "2. Multimodal Independent Component Analysis (MICA) and Group Independent Component Analysis (GroupICA)"
+author:
+- name: Koki Tsuyuzaki
+  affiliation: Department of Artificial Intelligence Medicine,
+    Graduate School of Medicine, Chiba University
+  email: k.t.the-answer@hotmail.co.jp
+date: "`r Sys.Date()`"
+bibliography: bibliography.bib
+package: iTensor
+output: rmarkdown::html_vignette
+vignette: |
+  %\VignetteIndexEntry{2. Multimodal Independent Component Analysis (MICA) and Group Independent Component Analysis (GroupICA)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+In this vignette we consider approximating multiple data matrices as a product of multiple low-rank matrices (a.k.a., factor matrices).
+
+Test data is available from `toyModel`.
+
+```{r data, echo=TRUE}
+library("iTensor")
+data1 <- iTensor::toyModel("MICA")
+data2 <- iTensor::toyModel("GroupICA")
+str(data1, 2)
+str(data2, 2)
+```
+
+Both `data1` and `data2` contain two time-series data `X` and `Y` as follows.
+
+```{r data2, echo=TRUE, fig.height=4, fig.width=4}
+plot.ts(data1$X[7700:8000,], main="data1 (X)")
+plot.ts(data1$Y[7700:8000,], main="data1 (Y)")
+```
+
+```{r data3, echo=TRUE, fig.height=4, fig.width=8}
+plot.ts(data2$X[4700:5000,], main="data2 (X)")
+plot.ts(data2$Y[4700:5000,], main="data2 (Y)")
+```
+
+# Multimodal Independent Component Analysis (MICA)
+
+As a formulation that extends ICA (independent component analysis) to the multiple matrices case, Multimodal Independent Component Analysis (MICA) was proposed ([@mica]). MICA extracts statistically dependent pairs of features from the sources, where the components of feature vector extracted from each source are independent.
+
+`MICA` can be performed as follows.
+
+```{r mica, echo=TRUE, fig.height=4, fig.width=4}
+t_series <- seq(from = 0.00, to = 1.000, by = 1e-4)
+out.MICA <- MICA(data1$X, data1$Y, J=3, gamma_ts = 1 - 1 / (1 + exp(-100 * (t_series - 0.3))))
+```
+
+`J` is the rank parameter for ICA and `gamma_ts` is the weighting factor for dependence on independence.
+You will see that `MICA` could extract some time-series signals.
+
+```{r pairs_mica, echo=TRUE, fig.height=4, fig.width=4}
+plot.ts(out.MICA$U[7700:8000, ], main="Source Signal (X)")
+plot.ts(out.MICA$V[7700:8000, ], main="Source Signal (Y)")
+```
+
+# Group Independent Component Analysis (GroupICA)
+
+Another formulation of the decomposition is Group Independent Component Analysis (GroupICA [@groupica1; @groupica2]). `GroupICA` can be performed as follows.
+
+```{r groupica, echo=TRUE}
+out_groupica_pooled_infomax <- GroupICA(data2, J1=6, algorithm="pooled", ica.algorithm="InfoMax")
+
+out_groupica_Calhoun2009_fastica <- GroupICA(data2, J1=6, algorithm="Calhoun2009", ica.algorithm="FastICA")
+
+out_groupica_Pfister2018_amuse <- GroupICA(data2, J1=6, algorithm="Pfister2018", ica.algorithm="AMUSE")
+```
+
+The rank for each factor matrix can be set as `J1` and the decomposition algorithm can be easily switched by `ica.algorithm` (`algorithm` of `ICA` and `ICA2` can be specified). To pool the results of ICA against each data matrix, we implemented three algorithms such as `pooled`, `Calhoun2009`, and `Pfister2018`. For the details, see the references [@groupica1; @groupica2].
+
+You will see that `GroupICA` could extract some time-series signals.
+
+```{r plot_groupica, echo=TRUE, fig.height=4, fig.width=8}
+plot.ts(out_groupica_pooled_infomax$Ss[[1]], main="Source Signal (X)")
+plot.ts(out_groupica_pooled_infomax$Ss[[2]], main="Source Signal (Y)")
+
+plot.ts(out_groupica_Calhoun2009_fastica$Ss[[1]], main="Source Signal (X)")
+plot.ts(out_groupica_Calhoun2009_fastica$Ss[[2]], main="Source Signal (Y)")
+
+plot.ts(out_groupica_Pfister2018_amuse$Ss[[1]], main="Source Signal (X)")
+plot.ts(out_groupica_Pfister2018_amuse$Ss[[2]], main="Source Signal (Y)")
+```
+
+Unlike `MICA`, `GroupICA` can also be applied to more than three matrices.
+
+# Session Information {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+
+# References

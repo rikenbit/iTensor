@@ -1,7 +1,7 @@
 Package: iTensor
 Type: Package
 Title: ICA-Based Matrix/Tensor Decomposition
-Version: 0.99.1
+Version: 1.0.0
 Authors@R: c(person("Koki", "Tsuyuzaki", role = c("aut", "cre"),
                       email = "k.t.the-answer@hotmail.co.jp"))
 Description: Some functions for performing ICA, MICA, and Multilinear ICA are implemented.
@@ -12,12 +12,24 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 4.1.0)
 URL: https://github.com/rikenbit/mwTensor
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Suggests:
+    nnTensor,
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports:
     MASS,
     methods,
+    graphics,
+    utils,
+    stats,
     rTensor,
-    stats
+    jointDiag,
+    mgcv,
+    einsum,
+    geigen,
+    mixOmics,
+    groupICA
+VignetteBuilder: knitr

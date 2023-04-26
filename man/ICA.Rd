@@ -2,10 +2,7 @@
 % Please edit documentation in R/ICA.R
 \name{ICA}
 \alias{ICA}
-\title{Independent Component Analysis
-The input data is assumed to be a matrix.
-ICA decomposes the matrix and extract the components that
-are statistically independent each other.}
+\title{Independent Component Analysis (Classic Methods)}
 \usage{
 ICA(
   X,
@@ -39,7 +36,6 @@ ICA(
 A list containing the result of the decomposition
 }
 \description{
-Independent Component Analysis
 The input data is assumed to be a matrix.
 ICA decomposes the matrix and extract the components that
 are statistically independent each other.

@@ -1,5 +1,5 @@
 # Simulation Dataset
-X <- matrix(runif(100*200), nrow=100, ncol=200)
+X <- matrix(runif(200 * 100), nrow = 200, ncol = 100)
 
 ## Perform ICA against Simulation Dataset
 J <- 5
@@ -89,7 +89,6 @@ expect_error(ICA(X, J=J, thr="0.1"))
 expect_error(ICA(X, J=J, verbose="verbose"))
 
 ## Test Orthgonalization
-
 orthgonalized <- iTensor:::.orthgonalize(
     matrix(c(8, 1, 9, 8, 1, 4, 6, 0, 5), 3, 3))
 expect_equal((orthgonalized[1, ] %*% orthgonalized[1, ])[1], 1, tolerance=1e-8)
