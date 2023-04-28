@@ -65,14 +65,7 @@ plot.ts(out.MICA$V[7700:8000, ], main="Source Signal (Y)")
 Another formulation of the decomposition is Group Independent Component Analysis (GroupICA [@groupica1; @groupica2]). `GroupICA` can be performed as follows.
 
 ```{r groupica, echo=TRUE}
-out_groupica_pooled_infomax <- GroupICA(data2, J1=6,
-    algorithm="pooled", ica.algorithm="InfoMax")
-
-out_groupica_Calhoun2009_fastica <- GroupICA(data2, J1=6,
-    algorithm="Calhoun2009", ica.algorithm="FastICA")
-
-out_groupica_Pfister2018_amuse <- GroupICA(data2, J1=6,
-    algorithm="Pfister2018", ica.algorithm="AMUSE")
+out_groupica <- GroupICA(data2, J1=6, algorithm="pooled")
 ```
 
 The rank for each factor matrix can be set as `J1` and the decomposition algorithm can be easily switched by `ica.algorithm` (`algorithm` of `ICA` and `ICA2` can be specified). To pool the results of ICA against each data matrix, we implemented three algorithms such as `pooled`, `Calhoun2009`, and `Pfister2018`. For the details, see the references [@groupica1; @groupica2].
@@ -80,14 +73,8 @@ The rank for each factor matrix can be set as `J1` and the decomposition algorit
 You will see that `GroupICA` could extract some time-series signals.
 
 ```{r plot_groupica, echo=TRUE, fig.height=4, fig.width=8}
-plot.ts(out_groupica_pooled_infomax$Ss[[1]], main="Source Signal (X)")
-plot.ts(out_groupica_pooled_infomax$Ss[[2]], main="Source Signal (Y)")
-
-plot.ts(out_groupica_Calhoun2009_fastica$Ss[[1]], main="Source Signal (X)")
-plot.ts(out_groupica_Calhoun2009_fastica$Ss[[2]], main="Source Signal (Y)")
-
-plot.ts(out_groupica_Pfister2018_amuse$Ss[[1]], main="Source Signal (X)")
-plot.ts(out_groupica_Pfister2018_amuse$Ss[[2]], main="Source Signal (Y)")
+plot.ts(out_groupica$Ss[[1]], main="Source Signal (X)")
+plot.ts(out_groupica$Ss[[2]], main="Source Signal (Y)")
 ```
 
 Unlike `MICA`, `GroupICA` can also be applied to more than three matrices.

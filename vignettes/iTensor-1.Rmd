@@ -61,24 +61,11 @@ allICA <- function(X, J){
     out.FastICA <- ICA(X=X, J=J, algorithm="FastICA")
     out.InfoMax <- ICA(X=X, J=J, algorithm="InfoMax")
     out.ExtInfoMax <- ICA(X=X, J=J, algorithm="ExtInfoMax")
-
-    # Modern ICA Methods
+    # Modern ICA Method
     out.JADE <- ICA2(X=X, J=J, algorithm="JADE")
-    out.AuxICA1 <- ICA2(X=X, J=J, algorithm="AuxICA1")
-    out.AuxICA2 <- ICA2(X=X, J=J, algorithm="AuxICA2")
-    out.SIMBEC <- ICA2(X=X, J=J, algorithm="SIMBEC")
-    out.AMUSE <- ICA2(X=X, J=J, algorithm="AMUSE")
-    out.SOBI <- ICA2(X=X, J=J, algorithm="SOBI")
-    out.FOBI <- ICA2(X=X, J=J, algorithm="FOBI")
-    out.ProDenICA <- ICA2(X=X, J=J, algorithm="ProDenICA", num.iter = 1)
-    out.RICA <- ICA2(X=X, J=J, algorithm="RICA", num.iter = 1)
-
     # Output
     list(out.FastICA=out.FastICA, out.InfoMax=out.InfoMax,
-      out.ExtInfoMax=out.ExtInfoMax, out.JADE=out.JADE,
-      out.AuxICA1=out.AuxICA1, out.AuxICA2=out.AuxICA2,
-      out.SIMBEC=out.SIMBEC, out.AMUSE=out.AMUSE, out.SOBI=out.SOBI, out.FOBI=out.FOBI,
-      out.ProDenICA=out.ProDenICA, out.RICA=out.RICA)
+      out.ExtInfoMax=out.ExtInfoMax, out.JADE=out.JADE)
 }
 
 CorrIndexAllICA <- function(S, out){
@@ -93,6 +80,8 @@ CorrIndexAllICA <- function(S, out){
 }
 ```
 
+Note that we select only four ICA algorithms for the demonstration but in `iTensor` 12 ICA algorithms are available. For the details, check `?ICA` and `?ICA2`.
+
 # 1. ICA with time-independent sub-Gaussian data
 
 In this data, according to the independence between estimated source signal, an upright square means that the calculation is successful and other cases such as a rhombus rotated 45 degrees from a square means that the calculation is fail.
@@ -102,7 +91,7 @@ set.seed(123456)
 out1 <- allICA(X=data1$X_observed, J=3)
 ```
 
-Here we use CorrIndex, which is a performance index to evaluate ICA results [@corrindex]. CorrIndex imply that FastICA, ExtInfoMax, JADE, and SIMBEC performed well (the closer to 0, the better the performance).
+Here we use CorrIndex, which is a performance index to evaluate ICA results [@corrindex]. CorrIndex imply that FastICA, ExtInfoMax, and JADE performed well (the closer to 0, the better the performance).
 
 ```{r corrindex1, echo=TRUE}
 CorrIndexAllICA(data1$S_true, out1)
@@ -115,14 +104,6 @@ pairs(out1$out.FastICA$S, main="FastICA")
 pairs(out1$out.InfoMax$S, main="InfoMax")
 pairs(out1$out.ExtInfoMax$S, main="ExtInfoMax")
 pairs(Re(out1$out.JADE$S), main="JADE")
-pairs(out1$out.AuxICA1$S, main="AuxICA1")
-pairs(out1$out.AuxICA2$S, main="AuxICA2")
-pairs(out1$out.SIMBEC$S, main="SIMBEC")
-pairs(out1$out.AMUSE$S, main="AMUSE")
-pairs(out1$out.SOBI$S, main="SOBI")
-pairs(out1$out.FOBI$S, main="FOBI")
-pairs(out1$out.ProDenICA$S, main="ProDenICA")
-pairs(out1$out.RICA$S, main="RICA")
 ```
 
 # 2. ICA with time-independent super-Gaussian data
@@ -134,7 +115,7 @@ set.seed(123456)
 out2 <- allICA(X=data2$X_observed, J=3)
 ```
 
-CorrIndex imply that FastICA, InfoMax, ExtInfoMax, JADE, AuxICA1, and AuxICA2 performed well.
+CorrIndex imply that all the algorithms performed well.
 
 ```{r corrindex2, echo=TRUE}
 CorrIndexAllICA(data2$S_true, out2)
@@ -147,14 +128,6 @@ pairs(out2$out.FastICA$S, main="FastICA")
 pairs(out2$out.InfoMax$S, main="InfoMax")
 pairs(out2$out.ExtInfoMax$S, main="ExtInfoMax")
 pairs(Re(out2$out.JADE$S), main="JADE")
-pairs(out2$out.AuxICA1$S, main="AuxICA1")
-pairs(out2$out.AuxICA2$S, main="AuxICA2")
-pairs(out2$out.SIMBEC$S, main="SIMBEC")
-pairs(out2$out.AMUSE$S, main="AMUSE")
-pairs(out2$out.SOBI$S, main="SOBI")
-pairs(out2$out.FOBI$S, main="FOBI")
-pairs(out2$out.ProDenICA$S, main="ProDenICA")
-pairs(out2$out.RICA$S, main="RICA")
 ```
 
 # 3. ICA with data mixed with signals having no time dependence and different kurtosis
@@ -179,14 +152,6 @@ pairs(out3$out.FastICA$S, main="FastICA")
 pairs(out3$out.InfoMax$S, main="InfoMax")
 pairs(out3$out.ExtInfoMax$S, main="ExtInfoMax")
 pairs(Re(out3$out.JADE$S), main="JADE")
-pairs(out3$out.AuxICA1$S, main="AuxICA1")
-pairs(out3$out.AuxICA2$S, main="AuxICA2")
-pairs(out3$out.SIMBEC$S, main="SIMBEC")
-pairs(out3$out.AMUSE$S, main="AMUSE")
-pairs(out3$out.SOBI$S, main="SOBI")
-pairs(out3$out.FOBI$S, main="FOBI")
-pairs(out3$out.ProDenICA$S, main="ProDenICA")
-pairs(out3$out.RICA$S, main="RICA")
 ```
 
 # 4. ICA with time-dependent data
@@ -198,7 +163,7 @@ set.seed(123456)
 out4 <- allICA(X=data4$X_observed, J=3)
 ```
 
-CorrIndex imply that FastICA, ExtInfoMax, JADE, AMUSE, ProDenICA performed well.
+CorrIndex imply that FastICA, ExtInfoMax, and JADE performed well.
 
 ```{r corrindex4, echo=TRUE}
 CorrIndexAllICA(data4$S_true, out4)
@@ -211,14 +176,6 @@ pairs(out4$out.FastICA$S, main="FastICA")
 pairs(out4$out.InfoMax$S, main="InfoMax")
 pairs(out4$out.ExtInfoMax$S, main="ExtInfoMax")
 pairs(Re(out4$out.JADE$S), main="JADE")
-pairs(out4$out.AuxICA1$S, main="AuxICA1")
-pairs(out4$out.AuxICA2$S, main="AuxICA2")
-pairs(out4$out.SIMBEC$S, main="SIMBEC")
-pairs(out4$out.AMUSE$S, main="AMUSE")
-pairs(out4$out.SOBI$S, main="SOBI")
-pairs(out4$out.FOBI$S, main="FOBI")
-pairs(out4$out.ProDenICA$S, main="ProDenICA")
-pairs(out4$out.RICA$S, main="RICA")
 ```
 
 # 5. IPCA in N < P systems
