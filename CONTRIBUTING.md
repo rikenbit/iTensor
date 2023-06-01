@@ -2,7 +2,7 @@
 Thanks for having the interest of this package.
 Your support is wellcome for keeping it great.
 
-Please note that this project is released with a [Contributor Code of Conduct][code-of-conduct].
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
 
 By participating in this project you agree to abide by its terms.
 
