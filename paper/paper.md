@@ -44,7 +44,8 @@ ICA and plots in Figure \autoref{fig:ica} can be easily reproduced on any machin
 
 ```r
 # Install package required (one per computer)
-install.packages("iTensor")
+install.packages("BiocManager")
+BiocManager::install(c("mixOmics", "iTensor"))
 
 # Load required package (once per R instance)
 library("iTensor")
