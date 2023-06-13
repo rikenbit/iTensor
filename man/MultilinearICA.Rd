@@ -8,8 +8,7 @@ MultilinearICA(
   X,
   Js = c(3, 3, 3),
   modes = 1:3,
-  algorithm = c("FastICA", "InfoMax", "ExtInfoMax", "JADE", "AuxICA1", "AuxICA2", "IPCA",
-    "SIMBEC", "AMUSE", "SOBI", "FOBI", "ProDenICA", "RICA")
+  algorithm = c("FastICA", "InfoMax", "ExtInfoMax")
 )
 }
 \arguments{

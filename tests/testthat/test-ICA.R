@@ -1,11 +1,15 @@
 # Simulation Dataset
-X <- matrix(runif(200 * 100), nrow = 200, ncol = 100)
+X <- matrix(runif(50 * 10), nrow = 50, ncol = 10)
 
 ## Perform ICA against Simulation Dataset
 J <- 5
 out.FastICA <- ICA(X, J=J, algorithm="FastICA")
 out.InfoMax <- ICA(X, J=J, algorithm="InfoMax")
 out.ExtInfoMax <- ICA(X, J=J, algorithm="ExtInfoMax")
+
+## Test Hidden Functions
+expect_equal(length(iTensor:::.nonlinear_transform_function_fastica("tanh")), 2)
+expect_true(is.list(iTensor:::.whitening(X, J)))
 
 ## Test Output object / type
 ### Test O-1: Object

@@ -17,9 +17,7 @@
 #' @importFrom methods is
 #' @export
 MultilinearICA <- function(X, Js=c(3,3,3), modes=1:3,
-    algorithm=c("FastICA", "InfoMax", "ExtInfoMax",
-        "JADE", "AuxICA1", "AuxICA2", "IPCA", "SIMBEC",
-        "AMUSE", "SOBI", "FOBI", "ProDenICA", "RICA")){
+    algorithm=c("FastICA", "InfoMax", "ExtInfoMax")){
     ######################################
     # Argument Check
     ######################################
@@ -39,11 +37,7 @@ MultilinearICA <- function(X, Js=c(3,3,3), modes=1:3,
         if(m %in% modes){
             position <- which(modes == m)
             Xm <- cs_unfold(X, m=m)@data
-            if(algorithm %in% c("FastICA", "InfoMax", "ExtInfoMax")){
-                As[[m]] <- ICA(X=Xm, J=Js[position], algorithm=algorithm)$A
-            }else{
-                As[[m]] <- ICA2(X=Xm, J=Js[position], algorithm=algorithm)$A
-            }
+            As[[m]] <- ICA(X=Xm, J=Js[position], algorithm=algorithm)$A
         }
     }
     # Core tensor

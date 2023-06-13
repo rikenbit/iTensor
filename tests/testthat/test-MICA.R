@@ -4,7 +4,7 @@ Y <- array(runif(15*20), dim=c(15,20))
 
 ## Perform MICA against Simulation Datasets
 J <- 20
-out <- MICA(X, Y, J=J)
+out <- MICA(X, Y, J=J, verbose=TRUE)
 
 ## Test Output object / type
 ### Test O-1: Object

@@ -4,7 +4,14 @@ X <- as.tensor(arrX)
 
 ## Perform MICA against Simulation Datasets
 Js <- c(2,3,4)
-out <- MultilinearICA(X, Js=Js)
+modes <- 1:3
+out <- MultilinearICA(X, Js=Js, algorithm="FastICA")
+
+## Test Hidden Functions
+expect_true(is.null(iTensor:::.checkMultilinearICA(X, Js, modes=modes)))
+expect_equal(iTensor:::.ndim(X), 3)
+expect_true(is.list(iTensor:::.initMultilinearICA(X, Js, modes=modes)))
+expect_true("Tensor" %in% is(iTensor:::.projection(X, out$As, modes=modes)))
 
 ## Test Output object / type
 ### Test O-1: Object
@@ -16,7 +23,6 @@ expect_identical(names(out),
 
 ### Test 0-3: As
 expect_identical(is.list(out$As), TRUE)
-
 expect_equal(dim(out$As[[1]]), c(Js[1], dim(X)[1]))
 expect_equal(dim(out$As[[2]]), c(Js[2], dim(X)[2]))
 expect_equal(dim(out$As[[3]]), c(Js[3], dim(X)[3]))

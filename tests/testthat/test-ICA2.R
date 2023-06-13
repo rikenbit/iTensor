@@ -1,18 +1,20 @@
 # Simulation Dataset
-X <- matrix(runif(200 * 100), nrow = 200, ncol = 100)
+X <- matrix(runif(100 * 50), nrow = 100, ncol = 50)
 
 ## Perform ICA against Simulation Dataset
 J <- 5
-out.JADE <- ICA2(X, J = J, algorithm = "JADE")
-out.AuxICA1 <- ICA2(X, J = J, algorithm = "AuxICA1")
-out.AuxICA2 <- ICA2(X, J = J, algorithm = "AuxICA2")
-out.IPCA <- ICA2(X, J = J, algorithm = "IPCA")
-out.SIMBEC <- ICA2(X, J = J, algorithm = "SIMBEC")
-out.AMUSE <- ICA2(X, J = J, algorithm = "AMUSE")
-out.SOBI <- ICA2(X, J = J, algorithm = "SOBI")
-out.FOBI <- ICA2(X, J = J, algorithm = "FOBI")
-out.ProDenICA <- ICA2(X, J = J, algorithm = "ProDenICA", num.iter = 1)
-out.RICA <- ICA2(X, J = J, algorithm = "RICA", num.iter = 1)
+out.JADE <- ICA2(X, J = J, algorithm = "JADE", verbose=TRUE)
+out.AuxICA1 <- ICA2(X, J = J, algorithm = "AuxICA1", verbose=TRUE)
+out.AuxICA2 <- ICA2(X, J = J, algorithm = "AuxICA2", verbose=TRUE)
+out.IPCA <- ICA2(X, J = J, algorithm = "IPCA", verbose=TRUE)
+out.SIMBEC <- ICA2(X, J = J, algorithm = "SIMBEC", verbose=TRUE)
+out.AMUSE <- ICA2(X, J = J, algorithm = "AMUSE", verbose=TRUE)
+out.SOBI <- ICA2(X, J = J, algorithm = "SOBI", verbose=TRUE)
+out.FOBI <- ICA2(X, J = J, algorithm = "FOBI", verbose=TRUE)
+out.ProDenICA <- ICA2(X, J = J, algorithm = "ProDenICA",
+    num.iter = 1, verbose=TRUE)
+out.RICA <- ICA2(X, J = J, algorithm = "RICA",
+    num.iter = 1, verbose=TRUE)
 
 ## Test Output object / type
 ### Test O-1: Object
@@ -160,16 +162,16 @@ expect_identical(out.ProDenICA$thr, formals(ICA)$thr)
 expect_identical(out.RICA$thr, formals(ICA)$thr)
 
 ### Test 0-9: verbose
-expect_identical(out.JADE$verbose, formals(ICA)$verbose)
-expect_identical(out.AuxICA1$verbose, formals(ICA)$verbose)
-expect_identical(out.AuxICA2$verbose, formals(ICA)$verbose)
-expect_identical(out.IPCA$verbose, formals(ICA)$verbose)
-expect_identical(out.SIMBEC$verbose, formals(ICA)$verbose)
-expect_identical(out.AMUSE$verbose, formals(ICA)$verbose)
-expect_identical(out.SOBI$verbose, formals(ICA)$verbose)
-expect_identical(out.FOBI$verbose, formals(ICA)$verbose)
-expect_identical(out.ProDenICA$verbose, formals(ICA)$verbose)
-expect_identical(out.RICA$verbose, formals(ICA)$verbose)
+expect_identical(!out.JADE$verbose, formals(ICA)$verbose)
+expect_identical(!out.AuxICA1$verbose, formals(ICA)$verbose)
+expect_identical(!out.AuxICA2$verbose, formals(ICA)$verbose)
+expect_identical(!out.IPCA$verbose, formals(ICA)$verbose)
+expect_identical(!out.SIMBEC$verbose, formals(ICA)$verbose)
+expect_identical(!out.AMUSE$verbose, formals(ICA)$verbose)
+expect_identical(!out.SOBI$verbose, formals(ICA)$verbose)
+expect_identical(!out.FOBI$verbose, formals(ICA)$verbose)
+expect_identical(!out.ProDenICA$verbose, formals(ICA)$verbose)
+expect_identical(!out.RICA$verbose, formals(ICA)$verbose)
 
 ### Test 0-10: RecError
 expect_identical(is.vector(out.JADE$RecError), TRUE)
