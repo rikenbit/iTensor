@@ -66,7 +66,7 @@ pairs(Re(out.JADE$S))
 CorrIndex(cor(data1$S, Re(out.JADE$S)))
 ```
 
-![ICA with time-independent sub-gaussian data\label{fig:ica}](figure.png){ width=100% }
+![ICA with time-independent sub-gaussian data\label{fig:ica}.](figure.png){ width=100% }
 
 # Related work
 
