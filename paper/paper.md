@@ -8,7 +8,7 @@ tags:
   - multilinear independent component analysis
   - dimension reduction
 authors:
-  - name: Koki Tsuyuzaki^[first author]
+  - name: Koki Tsuyuzaki
     orcid: 0000-0003-3797-2148
     affiliation: "1, 2"
 affiliations:
@@ -26,7 +26,7 @@ Independent Component Analysis (ICA) is a widely used algorithm to extract a sma
 
 # Statement of need
 
-Currently, the most comprehensive implementation for ICA-related algorithms is the Group ICA Of fMRI Toolbox (GIFT, http://mialab.mrn.org/software/gift), but it is not freely available because it is implemented in MATLAB. Also, some open-source software is implemented in R and Python but those only focus on fewer algorithms. To fill this gap, I originally implemented some ICA-based matrix/tensor decomposition algorithms in R.
+Currently, the most comprehensive implementation for ICA-related algorithms is the Group ICA of fMRI Toolbox (GIFT, http://mialab.mrn.org/software/gift), but it is not freely available because it is implemented in MATLAB. Also, some open-source software is implemented in R and Python but those only focus on fewer algorithms. To fill this gap, I originally implemented some ICA-based matrix/tensor decomposition algorithms in R.
 
 \texttt{iTensor} provides the ICA-based matrix/tensor decomposition functions as follows:
 
@@ -40,7 +40,7 @@ I also implemented CorrIndex [@corrindex], which is a performance index to evalu
 
 # Example
 
-ICA and plots in Figure \autoref{fig:ica} can be easily reproduced on any machine where R is pre-installed by using the following commands in R:
+ICA and plots in \autoref{fig:ica} can be easily reproduced on any machine where R is pre-installed by using the following commands in R:
 
 ```r
 # Install package required (one per computer)
@@ -51,7 +51,7 @@ BiocManager::install(c("mixOmics", "iTensor"))
 library("iTensor")
 
 # Load Toy data
-data1 <- iTensor::toyModel("ICA_Type1")
+data1 <- toyModel("ICA_Type1")
 
 # Perform ICA
 set.seed(1234)
@@ -66,7 +66,7 @@ pairs(Re(out.JADE$S))
 CorrIndex(cor(data1$S, Re(out.JADE$S)))
 ```
 
-![ICA with time-independent sub-gaussian data\label{fig:ica}.](figure.png){ width=100% }
+![ICA with time-independent sub-gaussian data.\label{fig:ica}](figure.png){ width=100% }
 
 # Related work
 
