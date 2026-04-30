@@ -1,7 +1,7 @@
 Package: iTensor
 Type: Package
 Title: ICA-Based Matrix/Tensor Decomposition
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(person("Koki", "Tsuyuzaki", role = c("aut", "cre"),
                       email = "k.t.the-answer@hotmail.co.jp"))
 Description: Some functions for performing ICA, MICA, Group ICA, and Multilinear ICA are implemented.
@@ -30,6 +30,5 @@ Imports:
     mgcv,
     einsum,
     geigen,
-    mixOmics,
-    groupICA
+    mixOmics
 VignetteBuilder: knitr

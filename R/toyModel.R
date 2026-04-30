@@ -160,7 +160,6 @@
 #' data6 <- toyModel("MICA")
 #' data7 <- toyModel("GroupICA")
 #' @importFrom utils data
-#' @importFrom groupICA groupICA
 #' @importFrom stats runif rt filter
 #' @import mixOmics
 #' @export

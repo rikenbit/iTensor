@@ -7,8 +7,8 @@
 ICA2(
   X,
   J,
-  algorithm = c("JADE", "AuxICA1", "AuxICA2", "IPCA", "SIMBEC", "AMUSE", "SOBI", "FOBI",
-    "ProDenICA", "RICA"),
+  algorithm = c("JADE", "AuxICA1", "AuxICA2", "IPCA", "SIMBEC", "AMUSE", "SOBI",
+    "FOBI", "ProDenICA", "RICA"),
   num.iter = NULL,
   thr = 1e-10,
   r_list = NULL,

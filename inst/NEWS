@@ -1,3 +1,8 @@
+VERSION 1.0.4
+------------------------
+   o Integrated groupICA package code internally (groupICA is being archived from CRAN)
+   o Removed dependency on groupICA package
+
 VERSION 1.0.3
 ------------------------
    o Accepted by JOSS
