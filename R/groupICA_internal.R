@@ -8,6 +8,7 @@
 ##############################################
 
 #' @importFrom MASS ginv
+#' @importFrom stats cor
 
 .groupICA_Pfister <- function(X,
                      group_index=NA,
