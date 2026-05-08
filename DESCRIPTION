@@ -9,7 +9,7 @@ Description: Some functions for performing ICA, MICA, Group ICA, and Multilinear
     For the details of these methods, see the reference section of GitHub README.md <https://github.com/rikenbit/iTensor>.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Depends: R (>= 4.1.0)
+Depends: R (>= 3.4.0)
 URL: https://github.com/rikenbit/iTensor
 RoxygenNote: 7.2.3
 Suggests:
