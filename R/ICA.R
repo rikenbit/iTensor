@@ -111,13 +111,14 @@ ICA <- function(X, J,
     Sigma <- cov(XCentered)
     # compute eigenvectors
     EigenSigma <- eigen(Sigma)
-    # check number of nonzero elements
-    # TODO: includes machine epsilon
-    NumNonzeroEigenvalues <- sum(EigenSigma$values > 0)
+    # Eigenvalues of a covariance matrix are theoretically non-negative.
+    # Use abs() to handle small negative values from numerical error.
+    absEigenValues <- abs(EigenSigma$values)
+    NumNonzeroEigenvalues <- sum(absEigenValues > 0)
     if (NumNonzeroEigenvalues < J){
         J <- NumNonzeroEigenvalues
     }
-    LambdaSqrtInv <- diag(1 / sqrt(EigenSigma$values[1:J]))
+    LambdaSqrtInv <- diag(1 / sqrt(absEigenValues[1:J]))
     WhiteningMatrix <- EigenSigma$vectors[, 1:J] %*% t(LambdaSqrtInv)
     XWhiten <- XCentered %*% WhiteningMatrix
     # Output
