@@ -23,7 +23,6 @@
 #' @importFrom graphics hist
 #' @importFrom stats cov runif dnorm predict var sd
 #' @importFrom mgcv gam
-#' @importFrom geigen geigen
 #' @importFrom einsum einsum
 #' @export
 ICA2 <- function(

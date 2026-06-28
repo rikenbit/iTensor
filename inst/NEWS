@@ -1,3 +1,8 @@
+VERSION 1.0.6
+------------------------
+   o Integrated geigen function internally (geigen package is being archived from CRAN)
+   o Removed dependency on geigen package
+
 VERSION 1.0.5
 ------------------------
    o Fixed platform-dependent numerical issue in ICA whitening step
